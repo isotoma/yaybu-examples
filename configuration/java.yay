@@ -1,0 +1,25 @@
+# Java 6 Runtime
+# ==============
+#
+# Simple configuration to install sun-java6-jre, but after having accepted
+# the licence popup.
+#
+# .. todo:: This needs to add the canonical partner repo
+#
+
+resources.append:
+  - File:
+      name: /var/cache/yaybu/java.seed
+      static: java/java.seed
+
+  - Execute:
+      name: seed-java
+      command: debconf-set-selections /var/cache/yaybu/java.seed
+      policy:
+        execute:
+          when: apply
+          on: File[/var/cache/yaybu/java.seed]
+
+  - Package:
+      - name: sun-java6-jre
+

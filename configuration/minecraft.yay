@@ -1,0 +1,65 @@
+# Minecraft Server
+# ================
+#
+# This configuration deploys the Minecraft server.
+
+
+# We depend on the java configuration to take care of the JRE for us
+.include:
+  - configuration/java.yay
+
+
+# By default we'll fetch the server code from minecraft.net, install to
+# /var/local/minecraft and run everything as the minecraft user.
+minecraft:
+    url: http://www.minecraft.net/download/minecraft_server.jar
+    path: /var/local/minecraft
+    user: minecraft
+
+
+# The installation is straightforward. We have a special system user/group
+# to do everything as, we wget into `minecraft.path` and create an init
+# script to start the server under screen.
+resources.append:
+  - Group:
+      name: ${minecraft.user}
+      system: true
+
+  - User:
+      name: ${minecraft.user}
+      home: ${minecraft.path}
+      disabled-password: true
+      disabled-login: true
+      system: true
+
+  - Package:
+      name: screen
+
+  - Directory:
+      name: ${minecraft.path}
+
+  - Execute:
+      name: wget-minecraft-server
+      cwd: ${minecraft.path}
+      creates: ${minecraft.path}/minecraft_server.jar
+      command: wget ${minecraft.url} -O ${minecraft.path}/minecraft_server.jar
+
+  - File:
+      name: ${minecraft.path}/server.sh
+      template: minecraft/server.sh
+      template_args:
+          path: ${minecraft.path}
+      mode: 0755
+
+  - File:
+      name: /etc/init.d/minecraft
+      template: minecraft/initscript
+      template_args:
+          path: ${minecraft.path}
+          user: ${minecraft.user}
+      mode: 0755
+
+  - Service:
+      name: minecraft
+      priority: 99
+
