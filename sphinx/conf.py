@@ -36,7 +36,7 @@ source_suffix = '.yay'
 #source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'index'
+master_doc = 'site'
 
 # General information about the project.
 project = u'Yaybu Example Configuration'
