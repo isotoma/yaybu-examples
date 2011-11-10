@@ -53,6 +53,7 @@ resources.append:
 
   - Directory:
       name: ${minecraft.path}
+      owner: ${minecraft.user}
 
   - Execute:
       name: wget-minecraft-server
