@@ -57,6 +57,7 @@ resources.append:
   - Execute:
       name: wget-minecraft-server
       cwd: ${minecraft.path}
+      user: ${minecraft.user}
       creates: ${minecraft.path}/minecraft_server.jar
       command: wget ${minecraft.url} -O ${minecraft.path}/minecraft_server.jar
 
@@ -72,6 +73,7 @@ resources.append:
       name: ${minecraft.path}/server.properties
       template: configuration/minecraft/server.properties.j2
       template_args: ${minecraft}
+      owner: minecraft
 
   - Service:
       name: minecraft
