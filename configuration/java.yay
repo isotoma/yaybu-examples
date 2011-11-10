@@ -28,7 +28,7 @@ resources.append:
 
   - File:
       name: /var/cache/yaybu/java.seed
-      static: configuration/java/java.seed
+      static: configuration/java/java.selections
 
   - Execute:
       name: seed-java
