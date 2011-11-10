@@ -62,7 +62,7 @@ resources.append:
 
   - File:
       name: /etc/init/minecraft.conf
-      template: configuration/minecraft/mincraft.conf.j2
+      template: configuration/minecraft/minecraft.conf.j2
       template_args:
           path: ${minecraft.path}
           user: ${minecraft.user}
