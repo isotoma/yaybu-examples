@@ -61,7 +61,7 @@ resources.append:
       cwd: ${minecraft.path}
       user: ${minecraft.user}
       creates: ${minecraft.path}/minecraft_server.jar
-      command: wget ${minecraft.url} -O ${minecraft.path}/minecraft_server.jar
+      command: wget -q ${minecraft.url} -O ${minecraft.path}/minecraft_server.jar
 
   - File:
       name: /etc/init/minecraft.conf
