@@ -46,14 +46,14 @@ resources.append:
 
   - File:
       name: ${minecraft.path}/server.sh
-      template: minecraft/server.sh
+      template: configuration/minecraft/server.sh
       template_args:
           path: ${minecraft.path}
       mode: 0755
 
   - File:
       name: /etc/init.d/minecraft
-      template: minecraft/initscript
+      template: configuration/minecraft/initscript
       template_args:
           path: ${minecraft.path}
           user: ${minecraft.user}
