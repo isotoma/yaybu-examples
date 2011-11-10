@@ -16,6 +16,25 @@ minecraft:
     path: /var/local/minecraft
     user: minecraft
 
+    # These are the settings that get baked into server.properties
+    levelname: world
+    allownether: true
+    viewdistance: 10
+    spawnmonsters: true
+    onlinemode: true
+    difficulty: 1
+    gamemode: 0
+    spawnanimals: true
+    maxplayers: 20
+    serverip:
+    pvp: true
+    levelseed:
+    serverport: 25565
+    allowflight: false
+    whitelist: false
+    motd: A Minecraft Server
+
+
 
 # The installation is straightforward. We have a special system user/group
 # to do everything as, we wget into `minecraft.path` and create an init
@@ -58,6 +77,11 @@ resources.append:
           path: ${minecraft.path}
           user: ${minecraft.user}
       mode: 0755
+
+  - File:
+      name: ${minecraft.path}/server.properties
+      template: configuration/minecraft/server.properties.j2
+      template_args: ${minecraft}
 
   - Service:
       name: minecraft
