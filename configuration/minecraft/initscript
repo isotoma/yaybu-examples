@@ -1,3 +1,5 @@
+#! /bin/sh
+
 ### BEGIN INIT INFO
 # Provides:             minecraft
 # Required-Start:       $remote_fs $syslog
