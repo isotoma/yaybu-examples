@@ -9,6 +9,24 @@
 
 resources.append:
   - File:
+      name: /etc/apt/sources.list.d/partner.list
+      owner: root
+      group: root
+      mode: 0644
+      static: java/partner.list
+
+  - Execute:
+      name: apt-get-update
+      command: apt-get update -y
+      policy:
+        execute:
+          - when: apply
+            on: File[/etc/apt/sources.list.d/partner.list]
+
+  - Directory:
+      name: /var/cache/yaybu
+
+  - File:
       name: /var/cache/yaybu/java.seed
       static: java/java.seed
 
