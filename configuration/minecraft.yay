@@ -51,9 +51,6 @@ resources.append:
       disabled-login: true
       system: true
 
-  - Package:
-      name: screen
-
   - Directory:
       name: ${minecraft.path}
 
@@ -64,15 +61,8 @@ resources.append:
       command: wget ${minecraft.url} -O ${minecraft.path}/minecraft_server.jar
 
   - File:
-      name: ${minecraft.path}/server.sh
-      template: configuration/minecraft/server.sh
-      template_args:
-          path: ${minecraft.path}
-      mode: 0755
-
-  - File:
-      name: /etc/init.d/minecraft
-      template: configuration/minecraft/initscript
+      name: /etc/init/minecraft.conf
+      template: configuration/minecraft/mincraft.conf.j2
       template_args:
           path: ${minecraft.path}
           user: ${minecraft.user}
