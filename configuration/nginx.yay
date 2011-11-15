@@ -1,0 +1,32 @@
+.include:
+  - configuration/apt.yay
+
+
+# Prefer the nginx stable PPA over the packages in Ubuntu
+
+apt:
+  sources.append:
+    - name: nginx
+      url: http://ppa.launchpad.net/nginx/stable/ubuntu
+      distro: lucid
+      components: main
+      key: C300EE8C
+      pin:
+
+
+resources.append:
+  - Package:
+      name: nginx
+
+  - File:
+      name: /etc/nginx/sites-enabled/default
+      policy: delete
+
+  - File:
+      name: /etc/nginx/nginx.conf
+      static: configuration/nginx/nginx.conf
+      mode: 0640
+
+  - Service:
+      name: nginx
+

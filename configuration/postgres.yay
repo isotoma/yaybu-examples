@@ -1,0 +1,13 @@
+
+resources.append:
+  - Package:
+      name: postgresql-8.4
+
+  - File:
+      name: /etc/postgresql/8.4/main/pg_hba.conf
+      static: configuration/postgres/pg_hba.conf
+      mode: 0755
+
+  - Service:
+      name: postgresql-8.4
+

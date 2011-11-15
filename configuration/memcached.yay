@@ -1,0 +1,16 @@
+resources.append:
+  - Package:
+      name: memcached
+
+  - File:
+      name: /etc/memcached.conf
+      static: configuration/memcached/memcached.conf
+      mode: 0640
+
+  - Service:
+      name: memcached
+      policy:
+        restart:
+          - when: apply
+            on: File[/etc/memcached.conf]
+

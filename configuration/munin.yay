@@ -1,0 +1,18 @@
+
+resources.append:
+  - Package:
+      name: munin-node
+
+  - File:
+      name: /etc/munin/munin-node.conf
+      template: configuration/munin/munin-node.conf.j2
+      template_args:
+          servers: localhost
+
+  - Service:
+      name: munin-node
+      policy:
+        restart:
+          - when: apply
+            on: File[/etc/munin/munin-node.conf]
+

@@ -1,0 +1,38 @@
+
+apt:
+    sources: []
+
+resources.append:
+  .foreach source in apt.sources:
+    - File:
+        name: /etc/apt/sources.list.d/${source.name}.list
+        template: recipes/components/packages/sources.list.j2
+        template_args:
+            source: ${source}
+    - File:
+        name: /etc/apt/preferences.d/${source.name}
+        template: recipes/components/packages/preferences.j2
+        template_args:
+            package: "*"
+            pin: ${source.pin}
+            pinpriority: 1001
+
+    - Execute:
+        name: core_packages_apt_key_${source.name}
+        command: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys ${source.key}
+        unless: sh -c 'apt-key list | grep pub | grep ${source.key}'
+
+
+resources.append:
+ - Execute:
+     - name: core_packages_apt_get_update
+       commands:
+           - apt-get update
+           - apt-get upgrade -y
+       policy:
+           execute.foreach s in package_sources:
+              - when: apply
+                on: File[/etc/apt/sources.list.d/${s.name}.list]
+              - when: execute
+                on: Execute[core_packages_apt_key_${s.name}]
+

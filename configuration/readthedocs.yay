@@ -1,0 +1,7 @@
+
+.include:
+  - configuration/nginx.yay
+  - configuration/memcached.yay
+  - configuration/postgres.yay
+  - configuration/munin.yay
+
